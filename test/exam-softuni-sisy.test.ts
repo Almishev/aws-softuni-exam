@@ -1,17 +1,28 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as ExamSoftuniSisy from '../lib/exam-softuni-sisy-stack';
+import * as cdk from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
+import * as ExamSoftuniSisy from '../lib/exam-softuni-sisy-stack';
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/exam-softuni-sisy-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new ExamSoftuniSisy.ExamSoftuniSisyStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+describe('ExamSoftuniSisyStack', () => {
+  let stack: ExamSoftuniSisy.ExamSoftuniSisyStack;
+  let template: Template;
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+  beforeEach(() => {
+    const app = new cdk.App();
+    stack = new ExamSoftuniSisy.ExamSoftuniSisyStack(app, 'MyTestStack');
+    template = Template.fromStack(stack);
+  });
+
+  test('SNS Topic Created', () => {
+    template.hasResourceProperties('AWS::SNS::Topic', {
+      DisplayName: 'JSON Processing Notifications',
+      TopicName: 'json-processing-notifications'
+    });
+  });
+
+  test('API Gateway Created', () => {
+    template.hasResourceProperties('AWS::ApiGateway::RestApi', {
+      Name: 'JSON Processing Service',
+      Description: 'API for processing JSON objects'
+    });
+  });
 });
