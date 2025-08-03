@@ -34,7 +34,7 @@ export class ExamSoftuniSisyStack extends cdk.Stack {
       environment: {
         TABLE_NAME: jsonProcessingTable.tableName,
         TOPIC_ARN: notificationTopic.topicArn,
-        EMAIL_ADDRESS: 'your-email@example.com' // Sisi will change this
+        EMAIL_ADDRESS: 'antonalmishev@abv.bg' 
       },
       timeout: cdk.Duration.seconds(30),
       memorySize: 256
@@ -47,7 +47,7 @@ export class ExamSoftuniSisyStack extends cdk.Stack {
       environment: {
         TABLE_NAME: jsonProcessingTable.tableName,
         TOPIC_ARN: notificationTopic.topicArn,
-        EMAIL_ADDRESS: 'your-email@example.com' // Sisi will change this
+        EMAIL_ADDRESS: 'antonalmishev@abv.bg' 
       },
       timeout: cdk.Duration.seconds(30),
       memorySize: 256
@@ -73,7 +73,7 @@ export class ExamSoftuniSisyStack extends cdk.Stack {
     jsonResource.addMethod('POST', jsonIntegration);
 
     const deleteRule = new events.Rule(this, 'DeleteInvalidJsonRule', {
-      schedule: events.Schedule.rate(cdk.Duration.minutes(30)), // Check every 30 minutes
+      schedule: events.Schedule.rate(cdk.Duration.minutes(30)), 
       description: 'Delete invalid JSON entries after 24 hours'
     });
 

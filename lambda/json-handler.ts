@@ -19,7 +19,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   try {
-    // Parse the request body
     const body = event.body;
     if (!body) {
       console.error('No body provided in request');
@@ -56,7 +55,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       };
     }
 
-    // Validate JSON structure
     if (!isValidJsonStructure(jsonObject)) {
       console.error('Invalid JSON structure');
       return {
@@ -77,7 +75,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const itemId = uuidv4();
 
     if (jsonObject.valid) {
-      // Valid JSON - send email via SNS
       console.log('Processing valid JSON:', jsonObject);
       
       const emailMessage = {
@@ -115,10 +112,9 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         })
       };
     } else {
-      // Invalid JSON - store in DynamoDB
       console.log('Processing invalid JSON:', jsonObject);
       
-      const ttl = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours from now
+      const ttl = Math.floor(Date.now() / 1000) + (24 * 60 * 60); 
       
       const dynamoParams = {
         TableName: process.env.TABLE_NAME!,
